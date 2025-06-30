@@ -1,0 +1,410 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.9);
+  --text-primary: #2d3748;
+  --text-secondary: #4a5568;
+  --shadow-soft: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 30px rgba(102, 126, 234, 0.2);
+  --node-primary: #667eea;
+  --node-secondary: #4facfe;
+  --connection-color: #a0aec0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  color: var(--text-primary);
+}
+
+/* Hide all scrollbars */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+*::-webkit-scrollbar { /* WebKit */
+  display: none;
+}
+
+/* Animated Background with Mindmap-style Floating Elements */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(79, 172, 254, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 40% 40%, rgba(118, 75, 162, 0.08) 0%, transparent 40%);
+  z-index: -1;
+  animation: mindmapFloat 25s ease-in-out infinite;
+}
+
+/* Mindmap-style floating animation */
+@keyframes mindmapFloat {
+  0%, 100% { 
+    transform: translateY(0px) translateX(0px) scale(1); 
+    opacity: 0.8;
+  }
+  25% { 
+    transform: translateY(-15px) translateX(10px) scale(1.02); 
+    opacity: 0.9;
+  }
+  50% { 
+    transform: translateY(8px) translateX(-8px) scale(0.98); 
+    opacity: 1;
+  }
+  75% { 
+    transform: translateY(-12px) translateX(-15px) scale(1.01); 
+    opacity: 0.85;
+  }
+}
+
+/* Node connection animation */
+@keyframes nodeConnect {
+  0% {
+    stroke-dasharray: 0, 100;
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    stroke-dasharray: 100, 0;
+    opacity: 1;
+  }
+}
+
+/* Node pulse animation for interactive elements */
+@keyframes nodePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+  }
+}
+
+/* Branch growth animation */
+@keyframes branchGrow {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
+
+/* Organic movement for mindmap elements */
+@keyframes organicMove {
+  0%, 100% { 
+    transform: translate(0, 0) rotate(0deg); 
+  }
+  25% { 
+    transform: translate(5px, -10px) rotate(1deg); 
+  }
+  50% { 
+    transform: translate(-3px, 5px) rotate(-0.5deg); 
+  }
+  75% { 
+    transform: translate(-8px, -3px) rotate(0.8deg); 
+  }
+}
+
+/* Cascade reveal animation */
+@keyframes cascadeReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Main Title Styling - Removed glow effects */
+h1 {
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  font-size: 3.5rem;
+  animation: cascadeReveal 1s ease-out;
+}
+
+/* Container Styling */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  animation: cascadeReveal 1.2s ease-out 0.2s both;
+}
+
+/* Box Styling with Mindmap Node Aesthetics - Removed hover effects */
+.box {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 2px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  min-width: 300px;
+  animation: cascadeReveal 1s ease-out 0.4s both;
+}
+
+/* Mindmap connection lines */
+.box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--node-primary), transparent);
+  animation: branchGrow 2s ease-out 0.8s both;
+}
+
+/* Section Titles - Removed glow effects */
+.box h5 {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+/* Add mindmap-style indicator dots */
+.box h5::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--node-primary);
+  border-radius: 50%;
+  animation: nodePulse 3s ease-in-out infinite;
+}
+
+/* Chart Area Styling - Removed hover effects */
+#chartArea {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 2rem;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(102, 126, 234, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Mindmap grid background */
+#chartArea::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(102, 126, 234, 0.1) 1px, transparent 0);
+  background-size: 20px 20px;
+  opacity: 0.3;
+  pointer-events: none;
+  animation: organicMove 30s ease-in-out infinite;
+}
+
+/* Form Controls - Removed hover/focus effects */
+.form-control {
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid rgba(102, 126, 234, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  backdrop-filter: blur(10px);
+  outline: none;
+}
+
+.form-control::placeholder {
+  color: rgba(77, 85, 104, 0.7);
+}
+
+#markdownArea {
+  min-height: 180px;
+  resize: vertical;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Modern Button Styling - Removed hover effects */
+.btn {
+  border: none;
+  border-radius: 12px;
+  padding: 0.8rem 1.5rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+/* Generate Button (Primary) */
+.btn-primary {
+  background: var(--primary-gradient);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* Download Button (Success) */
+.btn-success {
+  background: var(--success-gradient);
+  color: white;
+  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+}
+
+/* Button Size Adjustments */
+.btn-sm {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.85rem;
+}
+
+/* Button Icon Styling */
+.btn i {
+  font-size: 0.9rem;
+}
+
+/* Flex Layout Improvements */
+.d-flex {
+  align-items: center;
+}
+
+.gap-4 {
+  gap: 2rem !important;
+}
+
+.gap-2 {
+  gap: 1rem !important;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+  }
+  
+  .box {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  .box {
+    padding: 1.5rem;
+  }
+  
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .d-flex.gap-2,
+  .d-flex.gap-4 {
+    flex-direction: column;
+    gap: 1rem !important;
+  }
+  
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Loading Animation with Mindmap Style */
+.loading {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(102, 126, 234, 0.2);
+  border-radius: 50%;
+  border-top: 2px solid var(--node-primary);
+  animation: mindmapSpin 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  margin-right: 0.5rem;
+}
+
+@keyframes mindmapSpin {
+  0% { 
+    transform: rotate(0deg) scale(1); 
+  }
+  50% { 
+    transform: rotate(180deg) scale(1.1); 
+  }
+  100% { 
+    transform: rotate(360deg) scale(1); 
+  }
+}
+
+/* Mindmap-style staggered animations for multiple elements */
+.box:nth-child(1) { animation-delay: 0.1s; }
+.box:nth-child(2) { animation-delay: 0.2s; }
+.box:nth-child(3) { animation-delay: 0.3s; }
+.box:nth-child(4) { animation-delay: 0.4s; }
+
+/* Network connection lines for mindmap feel */
+.mindmap-connection {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(90deg, var(--node-primary), var(--node-secondary));
+  animation: nodeConnect 2s ease-out;
+  z-index: -1;
+}
+
+/* Organic breathing animation for interactive elements */
+@keyframes organicBreathe {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.02) rotate(0.5deg); }
+  50% { transform: scale(1.01) rotate(0deg); }
+  75% { transform: scale(1.03) rotate(-0.5deg); }
+}
