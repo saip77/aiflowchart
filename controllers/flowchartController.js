@@ -44,7 +44,7 @@ const generateFlowchart = async (req, res) => {
 
         res.json({ markdown: response.choices[0].message.content });
     } catch (error) {
-        console.error("OpenAI Error:", error);
+        console.error("Error:", error);
         res.status(500).json({ error: "Failed to generate Mermaid chart" });
     }
 };
